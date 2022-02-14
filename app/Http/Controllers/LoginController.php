@@ -27,10 +27,9 @@ class LoginController extends Controller
         
         if ($user && Hash::check($request->input('password'), $user->password)) {
             
-            Session::put('menu', Helper::menuAllowTo());
             Session::put('user', $user);
 
-            return redirect('/home');
+            return redirect('/dashboard');
         } else {
             return back()->with('status', 'Maaf, kombinasi username dan password Anda salah');
         }
