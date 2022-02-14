@@ -2,7 +2,7 @@
 
 @section('content')
     TES
-    
+    asdads
 @endsection
 
 @section('custom_js')
