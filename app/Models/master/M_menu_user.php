@@ -12,6 +12,7 @@ class M_menu_user extends Model
     use SoftDeletes;
 
     protected $table = "m_menu_user";
+    protected $primaryKey = "id_menu_user";
 
     protected $dates = ["deleted_at"];
     public $timestamps = true;

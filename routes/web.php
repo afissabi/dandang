@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Master\MenuController;
+use App\Http\Controllers\Master\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +38,8 @@ Route::group(['middleware' => 'user'], function () {
         ], function () {
             Route::get('/', [MenuController::class, 'index'])->name('index');
             Route::post('/simpan', [MenuController::class, 'store'])->name('store');
+            Route::post('/edit', [MenuController::class, 'edit'])->name('edit');
+            Route::post('/ubah', [MenuController::class, 'ubah'])->name('ubah');
             Route::post('/datatable', [MenuController::class, 'datatable'])->name('datatable');
             Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
         });
@@ -45,7 +48,12 @@ Route::group(['middleware' => 'user'], function () {
             'prefix' => 'role-user',
             'as' => 'role-user.',
         ], function () {
-            Route::get('/', [MenuController::class, 'role'])->name('role');
+            Route::get('/', [RoleController::class, 'index'])->name('index');
+            Route::post('/simpan', [RoleController::class, 'store'])->name('store');
+            Route::post('/edit', [RoleController::class, 'edit'])->name('edit');
+            Route::post('/ubah', [RoleController::class, 'ubah'])->name('ubah');
+            Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
+            Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
         });
     });
 });
