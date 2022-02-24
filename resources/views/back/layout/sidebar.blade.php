@@ -17,6 +17,38 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
                 {!! App\Helpers\Helper::menuAllowTo() !!}
                 
+                {{-- <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <i class="bi bi-archive fs-3"></i>
+                        </span>
+                        <span class="menu-title">Pages</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                        <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                            <span class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Profile</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                <div class="menu-item">
+                                    <a class="menu-link active" href="../../demo13/dist/pages/profile/overview.html">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Overview</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                
                 {{-- <div class="menu-item">
                     <a class="menu-link active" href="../../demo13/dist/index.html">
                         <span class="menu-icon">

@@ -12,9 +12,11 @@ class MenuController extends Controller
     public function index(){
 
         $all = M_menu::where('status',1)->get();
+        $sub = M_menu::where('status', 3)->get();
 
         $data = [
             'all' => $all,
+            'sub' => $sub,
         ];
 
         return view('back.master.menu',$data);
@@ -34,9 +36,13 @@ class MenuController extends Controller
             if ($value->status == 0) {
                 $data_tables[$key][] = '<center><span class="badge badge-success">TUNGGAL</span></center>';
             } elseif($value->status == 1) {
-                $data_tables[$key][] = '<center><span class="badge badge-info">PARENT</span></center>';
+                $data_tables[$key][] = '<center><span class="badge badge-info">PARENT MENU</span></center>';
             } elseif ($value->status == 2){
-                $data_tables[$key][] = '<center><span class="badge badge-danger">CHILD</span></center>';
+                $data_tables[$key][] = '<center><span class="badge badge-danger">CHILD MENU</span></center>';
+            } elseif ($value->status == 3) {
+                $data_tables[$key][] = '<center><span class="badge badge-danger">SUB PARENT MENU</span></center>';
+            } elseif ($value->status == 4) {
+                $data_tables[$key][] = '<center><span class="badge badge-danger">CHILD SUB PARENT MENU</span></center>';
             }
 
             if ($value->is_aktif == 1) {
@@ -66,13 +72,14 @@ class MenuController extends Controller
     {
         $data = new M_menu;
 
-        $data->nama_menu    = $request->nama_menu;
-        $data->status       = $request->status;
-        $data->parent_id    = $request->parent;
-        $data->is_aktif     = $request->aktif_menu ? 1 : 0;
-        $data->urutan       = $request->urut;
-        $data->icon         = $request->icon;
-        $data->url_menu     = $request->url_menu;
+        $data->nama_menu        = $request->nama_menu;
+        $data->status           = $request->status;
+        $data->parent_id        = $request->parent;
+        $data->sub_parent_id    = $request->subparent;
+        $data->is_aktif         = $request->aktif_menu ? 1 : 0;
+        $data->urutan           = $request->urut;
+        $data->icon             = $request->icon;
+        $data->url_menu         = $request->url_menu;
         
         try {
             $data->save();
@@ -108,6 +115,7 @@ class MenuController extends Controller
         $data->nama_menu    = $request->nama_menu;
         $data->status       = $request->status;
         $data->parent_id    = $request->parent;
+        $data->sub_parent_id = $request->subparent;
         $data->is_aktif     = $request->aktif_menu ? 1 : 0;
         $data->urutan       = $request->urut;
         $data->icon         = $request->icon;

@@ -16,4 +16,9 @@ class M_menu extends Model
 
     protected $dates = ["deleted_at"];
     public $timestamps = true;
+
+    public function parent()
+    {
+        return $this->belongsTo('App\Models\master\M_menu', 'parent_id');
+    }
 }

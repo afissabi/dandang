@@ -53,6 +53,8 @@
                                 <option value="0">Menu Tunggal</option>
                                 <option value="1">Parent Menu</option>
                                 <option value="2">Child Menu</option>
+                                <option value="3">Sub Parent Menu</option>
+                                <option value="4">Child Sub Parent Menu</option>
                             </select>
                         </div>
                     </div>
@@ -62,6 +64,17 @@
                             <select class="form-select" data-control="select2" name="parent" data-placeholder="Pilih Menu Parent">
                                 <option></option>
                                 @foreach ($all as $item)
+                                    <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>    
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-10" id="subparent" style="display: none">
+                        <label class="col-lg-3 col-form-label text-lg-end">Pilih Sub Parent Menu :</label>
+                        <div class="col-lg-8">
+                            <select class="form-select" data-control="select2" name="subparent" data-placeholder="Pilih Sub Menu Parent">
+                                <option></option>
+                                @foreach ($sub as $item)
                                     <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>    
                                 @endforeach
                             </select>
@@ -126,6 +139,9 @@
                 </div>
             </div>
             <div class="modal-body">
+                <?php
+                    $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu'];
+                ?>
                 <form method="post" class="kt-form kt-form--label-right" id="formedit">
                     <input type="hidden" class="form-control" id="id_menu" name="id_menu">
                     <div class="row mb-10">
@@ -133,8 +149,8 @@
                         <div class="col-lg-8">
                             <select class="form-select" data-control="select2" name="status" id="edit_status" data-placeholder="Pilih Menu Parent">
                                 @foreach($status as $key => $value)
-                                    <option value="{{ $key }}">
-                                        {{ $value }}
+                                    <option value="{{ $key }}" {{ $key == 1 ? 'selected' : '' }}>
+	                                    {{ $value }}
                                     </option>
                                 @endforeach
                             </select>
@@ -146,7 +162,18 @@
                             <select class="form-select" data-control="select2" name="parent" id="edit_parent" data-placeholder="Pilih Menu Parent">
                                 <option></option>
                                 @foreach ($all as $item)
-                                    <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>
+                                    <option value="{{ $item->id_menu }}" {{ $item['id_menu'] == 2 ? 'selected' : '' }}>{{ $item->nama_menu }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-10" id="stat_subparent" style="display: none">
+                        <label class="col-lg-3 col-form-label text-lg-end">Pilih Sub Parent Menu :</label>
+                        <div class="col-lg-8">
+                            <select class="form-select" data-control="select2" name="subparent" data-placeholder="Pilih Sub Menu Parent">
+                                <option></option>
+                                @foreach ($sub as $item)
+                                    <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>    
                                 @endforeach
                             </select>
                         </div>
@@ -406,8 +433,19 @@
             if ( $(this).val() == "2") {
                 $("#parent").show();
                 $("#parent").prop('required',true);
+                $("#subparent").hide();
+            } else if ($(this).val() == "3"){
+                $("#parent").show();
+                $("#parent").prop('required',true);
+                $("#subparent").hide();
+            } else if ($(this).val() == "4"){
+                $("#parent").show();
+                $("#parent").prop('required',true);
+                $("#subparent").show();
+                $("#subparent").prop('required',true);
             }
             else{
+                $("#subparent").hide();
                 $("#parent").hide();
             }
         });
@@ -416,8 +454,19 @@
             if ( $(this).val() == "2") {
                 $("#stat_parent").show();
                 $("#stat_parent").prop('required',true);
+                $("#stat_subparent").hide();
+            } else if ($(this).val() == "3"){
+                $("#stat_parent").show();
+                $("#stat_parent").prop('required',true);
+                $("#stat_subparent").hide();
+            } else if ($(this).val() == "4"){
+                $("#stat_parent").show();
+                $("#stat_parent").prop('required',true);
+                $("#stat_subparent").show();
+                $("#stat_subparent").prop('required',true);
             }
             else{
+                $("#stat_subparent").hide();
                 $("#stat_parent").hide();
             }
         });
