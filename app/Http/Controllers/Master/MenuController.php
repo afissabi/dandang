@@ -36,13 +36,13 @@ class MenuController extends Controller
             if ($value->status == 0) {
                 $data_tables[$key][] = '<center><span class="badge badge-success">TUNGGAL</span></center>';
             } elseif($value->status == 1) {
-                $data_tables[$key][] = '<center><span class="badge badge-info">PARENT MENU</span></center>';
+                $data_tables[$key][] = '<center><span class="badge badge-info" style="background:#0c13c5;">PARENT MENU</span></center>';
             } elseif ($value->status == 2){
-                $data_tables[$key][] = '<center><span class="badge badge-danger">CHILD MENU</span></center>';
+                $data_tables[$key][] = '<center><span class="badge badge-danger" style="background:#141646;">CHILD MENU</span></center>';
             } elseif ($value->status == 3) {
                 $data_tables[$key][] = '<center><span class="badge badge-danger">SUB PARENT MENU</span></center>';
             } elseif ($value->status == 4) {
-                $data_tables[$key][] = '<center><span class="badge badge-danger">CHILD SUB PARENT MENU</span></center>';
+                $data_tables[$key][] = '<center><span class="badge badge-danger" style="background:#c3005a;">CHILD SUB PARENT MENU</span></center>';
             }
 
             if ($value->is_aktif == 1) {

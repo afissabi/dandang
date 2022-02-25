@@ -144,7 +144,7 @@
             "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
             ">",
             ajax: {
-                url : "{{ url('master/role-user/datatable') }}",
+                url : "{{ url('master/hak-akses/role-user/datatable') }}",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "POST",
                 data: function(data){
@@ -173,7 +173,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/role-user/simpan') }}",
+                        url: "{{ url('master/hak-akses/role-user/simpan') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: $('#form').serialize()
@@ -230,7 +230,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/role-user/ubah') }}",
+                        url: "{{ url('master/hak-akses/role-user/ubah') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: $('#formedit').serialize()
@@ -284,7 +284,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/role-user/destroy') }}",
+                        url: "{{ url('master/hak-akses/role-user/destroy') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: {
@@ -330,7 +330,7 @@
             var role = $(this).data('id_role');
 
             $.ajax({
-                url: "{{ url('master/role-user/edit') }}",
+                url: "{{ url('master/hak-akses/role-user/edit') }}",
                 type: "post",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data: {

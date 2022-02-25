@@ -19,6 +19,14 @@
 	</head>
 	<body id="kt_body" class="bg-body">
 		<div class="d-flex flex-column flex-root">
+			@if(session('status'))
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<h4><i class="icon fa fa-check"></i> Alert!</h4>
+					{{ session('status') }}
+				</div>
+			@endif
+
 			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(assets/media/illustrations/unitedpalms-1/14.png">
 				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 					<a href="../../demo13/dist/index.html" class="mb-12">

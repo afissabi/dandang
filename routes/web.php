@@ -31,7 +31,26 @@ Route::group(['middleware' => 'user'], function () {
         'prefix' => 'master',
         'as' => 'master.',
     ], function () {
-        
+
+        Route::group([
+            'prefix' => 'hak-akses',
+            'as' => 'hak-akses.',
+        ], function () {
+            Route::get('/user', [RoleController::class, 'index'])->name('index');
+
+            Route::group([
+                'prefix' => 'role-user',
+                'as' => 'role-user.',
+            ], function () {
+                Route::get('/', [RoleController::class, 'index'])->name('index');
+                Route::post('/simpan', [RoleController::class, 'store'])->name('store');
+                Route::post('/edit', [RoleController::class, 'edit'])->name('edit');
+                Route::post('/ubah', [RoleController::class, 'ubah'])->name('ubah');
+                Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
+                Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
+            });
+        });
+
         Route::group([
             'prefix' => 'menu',
             'as' => 'menu.',
@@ -44,16 +63,6 @@ Route::group(['middleware' => 'user'], function () {
             Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
         });
 
-        Route::group([
-            'prefix' => 'role-user',
-            'as' => 'role-user.',
-        ], function () {
-            Route::get('/', [RoleController::class, 'index'])->name('index');
-            Route::post('/simpan', [RoleController::class, 'store'])->name('store');
-            Route::post('/edit', [RoleController::class, 'edit'])->name('edit');
-            Route::post('/ubah', [RoleController::class, 'ubah'])->name('ubah');
-            Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
-            Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
-        });
+        
     });
 });
