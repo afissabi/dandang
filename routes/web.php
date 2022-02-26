@@ -36,7 +36,17 @@ Route::group(['middleware' => 'user'], function () {
             'prefix' => 'hak-akses',
             'as' => 'hak-akses.',
         ], function () {
-            Route::get('/user', [RoleController::class, 'index'])->name('index');
+            Route::group([
+                'prefix' => 'user',
+                'as' => 'user.',
+            ], function () {
+                Route::get('/', [RoleController::class, 'index'])->name('index');
+                Route::post('/simpan', [RoleController::class, 'store'])->name('store');
+                Route::post('/edit', [RoleController::class, 'edit'])->name('edit');
+                Route::post('/ubah', [RoleController::class, 'ubah'])->name('ubah');
+                Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
+                Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
+            });
 
             Route::group([
                 'prefix' => 'role-user',
@@ -49,20 +59,18 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
                 Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
             });
-        });
 
-        Route::group([
-            'prefix' => 'menu',
-            'as' => 'menu.',
-        ], function () {
-            Route::get('/', [MenuController::class, 'index'])->name('index');
-            Route::post('/simpan', [MenuController::class, 'store'])->name('store');
-            Route::post('/edit', [MenuController::class, 'edit'])->name('edit');
-            Route::post('/ubah', [MenuController::class, 'ubah'])->name('ubah');
-            Route::post('/datatable', [MenuController::class, 'datatable'])->name('datatable');
-            Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+            Route::group([
+                'prefix' => 'menu',
+                'as' => 'menu.',
+            ], function () {
+                Route::get('/', [MenuController::class, 'index'])->name('index');
+                Route::post('/simpan', [MenuController::class, 'store'])->name('store');
+                Route::post('/edit', [MenuController::class, 'edit'])->name('edit');
+                Route::post('/ubah', [MenuController::class, 'ubah'])->name('ubah');
+                Route::post('/datatable', [MenuController::class, 'datatable'])->name('datatable');
+                Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+            });
         });
-
-        
     });
 });

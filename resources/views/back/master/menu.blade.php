@@ -248,7 +248,7 @@
             "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
             ">",
             ajax: {
-                url : "{{ url('master/menu/datatable') }}",
+                url : "{{ url('master/hak-akses/menu/datatable') }}",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "POST",
                 data: function(data){
@@ -277,7 +277,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/menu/simpan') }}",
+                        url: "{{ url('master/hak-akses/menu/simpan') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: $('#form').serialize()
@@ -334,7 +334,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/menu/ubah') }}",
+                        url: "{{ url('master/hak-akses/menu/ubah') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: $('#formedit').serialize()
@@ -388,7 +388,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('master/menu/destroy') }}",
+                        url: "{{ url('master/hak-akses/menu/destroy') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: {
@@ -476,7 +476,7 @@
             var menu = $(this).data('id_menu');
 
             $.ajax({
-                url: "{{ url('master/menu/edit') }}",
+                url: "{{ url('master/hak-akses/menu/edit') }}",
                 type: "post",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data: {
