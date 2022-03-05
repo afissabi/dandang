@@ -13,6 +13,7 @@ class M_menu extends Model
 
     protected $table = "m_menu";
     protected $primaryKey = "id_menu";
+    protected $guarded = [];
 
     protected $dates = ["deleted_at"];
     public $timestamps = true;

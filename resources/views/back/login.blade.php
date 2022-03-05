@@ -33,7 +33,7 @@
 						<img alt="Logo" src="assets/media/logos/logo-1.svg" class="h-40px" />
 					</a>
 					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
-						<form action="{{ url('/login-user') }}" method="post" enctype="multipart/form-data" id="loginform" class="form-vertical">
+						<form action="{{ route('login') }}" method="post" enctype="multipart/form-data" id="loginform" class="form-vertical">
                             {{ csrf_field() }}
 							<div class="text-center mb-10">
 								<h1 class="text-dark mb-3">Sign In to Metronic</h1>
@@ -42,7 +42,7 @@
 							</div>
 							<div class="fv-row mb-10">
 								<label class="form-label fs-6 fw-bolder text-dark">Username</label>
-								<input class="form-control form-control-lg form-control-solid" type="text" name="username" autocomplete="off" />
+								<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
 							</div>
 							<div class="fv-row mb-10">
 								<div class="d-flex flex-stack mb-2">

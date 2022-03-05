@@ -166,7 +166,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-
+        App\Providers\FortifyServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -181,7 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
     ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Class Aliases

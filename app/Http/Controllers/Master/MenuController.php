@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\master\M_menu;
+use GuzzleHttp\Client;
 use DB;
 
 class MenuController extends Controller
@@ -20,6 +21,20 @@ class MenuController extends Controller
         ];
 
         return view('back.master.menu',$data);
+    }
+
+    public function kamarhaji(){
+        $client = new Client(); //GuzzleHttp\Client
+        $url = "https://bpblinmas.surabaya.go.id/covid-19/api/data-denda-linmas";
+
+
+        $response = $client->request('GET', $url, [
+            'verify'  => false,
+        ]);
+
+        $kamar = json_decode($response->getBody());
+
+        return view('back.master.kamarhaji', compact('kamar'));
     }
 
     public function datatable()
