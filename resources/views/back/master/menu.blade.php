@@ -140,7 +140,7 @@
             </div>
             <div class="modal-body">
                 <?php
-                    $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu'];
+                    $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu','Parent Menu2','Child Menu2'];
                 ?>
                 <form method="post" class="kt-form kt-form--label-right" id="formedit">
                     <input type="hidden" class="form-control" id="id_menu" name="id_menu">
