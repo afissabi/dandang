@@ -1,3 +1,6 @@
+.header-fixed .header {
+    background: linear-gradient(to left, #783276, #1297b5);
+}
 .card .card-header {
     display: flex;
     justify-content: space-between;
@@ -11,6 +14,25 @@
 .aside-menu .menu-item.here>.menu-link,
 .aside-menu .menu-item.show>.menu-link {
     transition: color .2s ease, background-color .2s ease;
-    background-color: #815555;
+    background-color: #3d6c9a;
     color: #fff;
+}
+.aside-menu .menu-item .menu-link.active {
+    background-color: #743578;
+}
+.aside-menu .menu-item .menu-link:hover:not(.disabled):not(.active),
+.aside-menu .menu-item.hover>.menu-link:not(.disabled):not(.active) {
+    transition: color .2s ease, background-color .2s ease;
+    background-color: #8abac7;
+    color: #fff;
+}
+.aside .aside-logo {
+    background: linear-gradient(to right, #783276, #1297b5);
+}
+.aside {
+    background-color: #fff;
+}
+.footer{
+    background:#40507f;
+    color:#fff;
 }

@@ -20,7 +20,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $user = M_user::where(function ($query) use ($request) {
-            $query->where('username', $request->input('username'));
+            $query->where('username', $request->username);
         })->where(function ($query) {
             $query->where('is_aktif', '1');
         })->first();

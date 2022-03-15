@@ -16,9 +16,9 @@ use App\Http\Controllers\Master\UserController;
 |
 */
 
-// Route::get('/login', function () {
-//     return view('back.login');
-// });
+Route::get('/login', function () {
+    return view('back.login');
+});
 
 Route::get('/sign-out', [LoginController::class, 'logout'])->name('keluar');
 Route::post('/login-user', [LoginController::class, 'login'])->name('masuk');
