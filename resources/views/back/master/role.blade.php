@@ -74,7 +74,6 @@
     </div>
 </div>
 
-
 {{-- Modal Edit Data --}}
 <div class="modal fade" tabindex="-1" id="edit">
     <div class="modal-dialog">

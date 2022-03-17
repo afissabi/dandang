@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\M_user;
+use App\Models\master\M_role;
 use App\Models\master\M_menu;
 use App\Models\master\M_menu_user;
 use DB;
@@ -13,7 +15,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('back.master.user');
+        $role = M_role::all();
+
+        $data = [
+            'role' => $role,
+        ];
+
+        return view('back.master.user',$data);
     }
 
     public function datatable()
@@ -31,6 +39,8 @@ class UserController extends Controller
             } else {
                 $data_tables[$key][] = '<center><span class="badge badge-danger">NON AKTIF</span></center>';
             }
+
+            $data_tables[$key][] = $value->role->nama_role;
 
             $aksi = '';
 
@@ -73,5 +83,38 @@ class UserController extends Controller
         ];
 
         return view('back.master.menuuser',$data);
+    }
+
+    public function store(Request $request)
+    {
+        $data = new M_user;
+
+        $data->nama             = $request->nama_user;
+        $data->username         = $request->username;
+        $data->password_old     = Hash::make($request->password);
+        $data->see_password_old = $request->password;
+        $data->password         = Hash::make($request->password);
+        $data->see_password     = $request->password;
+        $data->is_aktif         = $request->aktif_user ? 1 : 0;
+        $data->role_id          = $request->role;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
     }
 }

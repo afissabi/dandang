@@ -42,7 +42,7 @@
                 </div>
             </div>
             <?php
-                $status = ['Menu Tunggal','Parent Menu','Child Menu'];
+                $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu','Parent Menu Two','Child Menu Two'];
             ?>
             <div class="modal-body">
                 <form method="post" class="kt-form kt-form--label-right" id="form">
@@ -55,6 +55,8 @@
                                 <option value="2">Child Menu</option>
                                 <option value="3">Sub Parent Menu</option>
                                 <option value="4">Child Sub Parent Menu</option>
+                                <option value="5">Parent Menu Two</option>
+                                <option value="6">Child Menu Two</option>
                             </select>
                         </div>
                     </div>
@@ -140,7 +142,7 @@
             </div>
             <div class="modal-body">
                 <?php
-                    $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu','Parent Menu2','Child Menu2'];
+                    $status =['Menu Tunggal','Parent Menu','Child Menu', 'Sub Parent Menu', 'Child Sub Parent Menu','Parent Menu Two','Child Menu Two'];
                 ?>
                 <form method="post" class="kt-form kt-form--label-right" id="formedit">
                     <input type="hidden" class="form-control" id="id_menu" name="id_menu">

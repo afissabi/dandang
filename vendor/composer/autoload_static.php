@@ -52,6 +52,7 @@ class ComposerStaticInitd1d778135135e768e0bbd3f55eea160c
         ),
         'W' => 
         array (
+            'Wildside\\Userstamps\\' => 20,
             'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
         ),
@@ -222,6 +223,10 @@ class ComposerStaticInitd1d778135135e768e0bbd3f55eea160c
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'Wildside\\Userstamps\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wildside/userstamps/src',
         ),
         'Whoops\\' => 
         array (
@@ -6233,6 +6238,12 @@ class ComposerStaticInitd1d778135135e768e0bbd3f55eea160c
         'Whoops\\Util\\Misc' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/Misc.php',
         'Whoops\\Util\\SystemFacade' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/SystemFacade.php',
         'Whoops\\Util\\TemplateHelper' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
+        'Wildside\\Userstamps\\Listeners\\Creating' => __DIR__ . '/..' . '/wildside/userstamps/src/Listeners/Creating.php',
+        'Wildside\\Userstamps\\Listeners\\Deleting' => __DIR__ . '/..' . '/wildside/userstamps/src/Listeners/Deleting.php',
+        'Wildside\\Userstamps\\Listeners\\Restoring' => __DIR__ . '/..' . '/wildside/userstamps/src/Listeners/Restoring.php',
+        'Wildside\\Userstamps\\Listeners\\Updating' => __DIR__ . '/..' . '/wildside/userstamps/src/Listeners/Updating.php',
+        'Wildside\\Userstamps\\Userstamps' => __DIR__ . '/..' . '/wildside/userstamps/src/Userstamps.php',
+        'Wildside\\Userstamps\\UserstampsScope' => __DIR__ . '/..' . '/wildside/userstamps/src/UserstampsScope.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

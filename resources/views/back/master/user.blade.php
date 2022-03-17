@@ -19,6 +19,7 @@
                     <th><center>Nama</center></th>
                     <th><center>Username</center></th>
                     <th><center>Status</center></th>
+                    <th><center>Role User</center></th>
                     <th width="15%"><center>Detail</center></th>
                 </tr>
             </thead>
@@ -57,6 +58,17 @@
                         <label class="col-lg-3 col-form-label text-lg-end required">Password :</label>
                         <div class="col-lg-8 col-xl-8">
                             <input type="text" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Role User :</label>
+                        <div class="col-lg-8 col-xl-8">
+                            <select class="form-select" data-control="select2" name="role" data-placeholder="Pilih Role User">
+                                <option></option>
+                                @foreach ($role as $item)
+                                    <option value="{{ $item->id_role }}">{{ $item->nama_role }}</option>    
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-10">
@@ -110,6 +122,17 @@
                         <label class="col-lg-3 col-form-label text-lg-end required">Password :</label>
                         <div class="col-lg-8 col-xl-8">
                             <input type="text" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Role User :</label>
+                        <div class="col-lg-8 col-xl-8">
+                            <select class="form-select" data-control="select2" name="role" data-placeholder="Pilih Role User">
+                                <option></option>
+                                @foreach ($role as $item)
+                                    <option value="{{ $item->id_role }}">{{ $item->nama_role }}</option>    
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-10">

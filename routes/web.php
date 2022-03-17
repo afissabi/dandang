@@ -60,6 +60,8 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/ubah', [RoleController::class, 'ubah'])->name('ubah');
                 Route::post('/datatable', [RoleController::class, 'datatable'])->name('datatable');
                 Route::post('/destroy', [RoleController::class, 'destroy'])->name('destroy');
+                Route::get('/menu/{id}', [RoleController::class, 'menu'])->name('menu');
+                Route::post('/simpan-menu', [RoleController::class, 'storeMenu'])->name('storeMenu');
             });
 
             Route::group([

@@ -11,7 +11,7 @@ class Helper
 {
     public static function menuAllowTo()
     {   
-        $recursiveMenu = M_menu_user::where('id_user', session('user')->id_user)->join('m_menu','m_menu.id_menu','=', 'm_menu_user.id_menu')->where('m_menu.deleted_at',null)->orderBy('m_menu.urutan','ASC')->get();
+        $recursiveMenu = M_menu_user::where('id_role', session('user')->role_id)->join('m_menu','m_menu.id_menu','=', 'm_menu_user.id_menu')->where('m_menu.deleted_at',null)->orderBy('m_menu.urutan','ASC')->get();
 
         $html = "";
         foreach ($recursiveMenu as $value) {
@@ -51,7 +51,7 @@ class Helper
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">';
                             
-                            $sub = M_menu_user::where('id_user', session('user')->id_user)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 3)->orderBy('m_menu.urutan', 'ASC')->get();
+                            $sub = M_menu_user::where('id_role', session('user')->role_id)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 3)->orderBy('m_menu.urutan', 'ASC')->get();
 
                                 foreach ($sub as $item) {
                                     if (strpos($currentURL, strtolower($item->url_menu)) != false) {
@@ -69,7 +69,7 @@ class Helper
                                                         </span>
                                                         <div class="menu-sub menu-sub-accordion menu-active-bg">';
 
-                                    $subchild = M_menu_user::where('id_user', session('user')->id_user)->where('sub_parent_id', $item->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 4)->orderBy('m_menu.urutan', 'ASC')->get();
+                                    $subchild = M_menu_user::where('id_role', session('user')->role_id)->where('sub_parent_id', $item->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 4)->orderBy('m_menu.urutan', 'ASC')->get();
 
                                     foreach ($subchild as $item) {
 
@@ -92,7 +92,7 @@ class Helper
 
                             $html .= '</div></div>';
 
-                    $child = M_menu_user::where('id_user', session('user')->id_user)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 2)->orderBy('m_menu.urutan', 'ASC')->get();
+                    $child = M_menu_user::where('id_role', session('user')->role_id)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 2)->orderBy('m_menu.urutan', 'ASC')->get();
 
                 foreach ($child as $item) {
 
@@ -129,7 +129,7 @@ class Helper
                                 <span class="menu-arrow"></span>
                             </span><div class="menu-sub menu-sub-accordion menu-active-bg">';
                 
-                $child = M_menu_user::where('id_user', session('user')->id_user)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 6)->orderBy('m_menu.urutan', 'ASC')->get();
+                $child = M_menu_user::where('id_role', session('user')->role_id)->where('parent_id', $value->id_menu)->join('m_menu', 'm_menu.id_menu', '=', 'm_menu_user.id_menu')->where('status', 6)->orderBy('m_menu.urutan', 'ASC')->get();
 
                 foreach ($child as $item) {
 

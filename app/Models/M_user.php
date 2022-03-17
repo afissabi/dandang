@@ -15,4 +15,9 @@ class M_user extends Model
 
     protected $dates = ["deleted_at"];
     public $timestamps = true;
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\master\M_role', 'role_id');
+    }
 }
