@@ -151,7 +151,7 @@
                         <div class="col-lg-8">
                             <select class="form-select" data-control="select2" name="status" id="edit_status" data-placeholder="Pilih Menu Parent">
                                 @foreach($status as $key => $value)
-                                    <option value="{{ $key }}" {{ $key == 1 ? 'selected' : '' }}>
+                                    <option value="{{ $key }}">
 	                                    {{ $value }}
                                     </option>
                                 @endforeach
@@ -164,7 +164,7 @@
                             <select class="form-select" data-control="select2" name="parent" id="edit_parent" data-placeholder="Pilih Menu Parent">
                                 <option></option>
                                 @foreach ($all as $item)
-                                    <option value="{{ $item->id_menu }}" {{ $item['id_menu'] == 2 ? 'selected' : '' }}>{{ $item->nama_menu }}</option>
+                                    <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -172,7 +172,7 @@
                     <div class="row mb-10" id="stat_subparent" style="display: none">
                         <label class="col-lg-3 col-form-label text-lg-end">Pilih Sub Parent Menu :</label>
                         <div class="col-lg-8">
-                            <select class="form-select" data-control="select2" name="subparent" data-placeholder="Pilih Sub Menu Parent">
+                            <select class="form-select" data-control="select2" name="subparent" id="edit_subparent" data-placeholder="Pilih Sub Menu Parent">
                                 <option></option>
                                 @foreach ($sub as $item)
                                     <option value="{{ $item->id_menu }}">{{ $item->nama_menu }}</option>    
@@ -492,17 +492,25 @@
                         $('#edit_url').val(msg.url_menu);
                         $('#edit_icon').val(msg.icon);
                         $('#edit_urut').val(msg.urutan);
-                        var x = msg.status;
-                        // document.getElementById("edit_status").innerHTML = x;
-                        // var select = document.getElementById('language');
-                        // var option = x.options[x.selectedIndex];
-                        _status = msg.status;
+                        $('#edit_parent').val(msg.parent_id).trigger("change");
+                        $('#edit_subparent').val(msg.sub_parent_id).trigger("change");
+                        $('#edit_status').val(msg.status).trigger("change");
+                        status = msg.status;
 
-                        if (_status == 2) {
+                        if (status == 3 | status == 6) {
                             $("#stat_parent").show();
                             $("#stat_parent").prop('required',true);
                         }else{
                             $("#stat_parent").hide();
+                        }
+
+                        if (status == 4 ) {
+                            $("#stat_parent").show();
+                            $("#stat_parent").prop('required',true);
+                            $("#stat_subparent").show();
+                            $("#stat_subparent").prop('required',true);
+                        }else{
+                            $("#stat_subparent").hide();
                         }
                     }else{
                         $('#id_menu').val('');

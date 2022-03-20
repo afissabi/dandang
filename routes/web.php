@@ -76,5 +76,17 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
             });
         });
+
+        Route::group([
+            'prefix' => 'pegawai',
+            'as' => 'pegawai.',
+        ], function () {
+            Route::group([
+                'prefix' => 'jabatan',
+                'as' => 'jabatan.',
+            ], function () {
+                Route::get('/', [UserController::class, 'index'])->name('index');
+            });
+        });
     });
 });

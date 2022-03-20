@@ -12,7 +12,7 @@ class MenuController extends Controller
 {
     public function index(){
 
-        $all = M_menu::where('status',1)->get();
+        $all = M_menu::where('status',1)->orWhere('status', 5)->get();
         $sub = M_menu::where('status', 3)->get();
 
         $data = [

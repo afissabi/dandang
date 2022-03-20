@@ -144,7 +144,7 @@ class RoleController extends Controller
         $menu = M_menu::whereIn('status', ['0', '1', '5'])->OrderBy('urutan', 'ASC')->where('deleted_at', null)->get();
 
         foreach ($menu as $value) {
-            $value->sub = M_menu::where('parent_id', $value->id_menu)->whereIn('status', ['3','6'])->where('deleted_at', null)->get();
+            $value->sub = M_menu::where('parent_id', $value->id_menu)->whereIn('status', ['2','3','6'])->where('deleted_at', null)->get();
             $value->menu_sub = M_menu_user::where('id_role', $id_role)->where('id_menu', $value->id_menu)->where('deleted_at', null)->first();
             foreach ($value->sub as $item) {
                 $item->sub_child = M_menu::where('sub_parent_id', $item->id_menu)->where('status', 4)->where('deleted_at', null)->get();
