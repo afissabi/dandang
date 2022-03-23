@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Master\MenuController;
 use App\Http\Controllers\Master\RoleController;
 use App\Http\Controllers\Master\UserController;
+use App\Http\Controllers\Master\StatusController;
+use App\Http\Controllers\Master\KlinikController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +76,35 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/ubah', [MenuController::class, 'ubah'])->name('ubah');
                 Route::post('/datatable', [MenuController::class, 'datatable'])->name('datatable');
                 Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'status',
+                'as' => 'status.',
+            ], function () {
+                Route::get('/', [StatusController::class, 'index'])->name('index');
+                Route::post('/simpan', [StatusController::class, 'store'])->name('store');
+                Route::post('/edit', [StatusController::class, 'edit'])->name('edit');
+                Route::post('/ubah', [StatusController::class, 'ubah'])->name('ubah');
+                Route::post('/datatable', [StatusController::class, 'datatable'])->name('datatable');
+                Route::post('/destroy', [StatusController::class, 'destroy'])->name('destroy');
+            });
+        });
+
+        Route::group([
+            'prefix' => 'klinik',
+            'as' => 'klinik.',
+        ], function () {
+            Route::group([
+                'prefix' => 'daftar',
+                'as' => 'daftar.',
+            ], function () {
+                Route::get('/', [KlinikController::class, 'index'])->name('index');
+                Route::post('/simpan', [KlinikController::class, 'store'])->name('store');
+                Route::post('/edit', [KlinikController::class, 'edit'])->name('edit');
+                Route::post('/ubah', [KlinikController::class, 'ubah'])->name('ubah');
+                Route::post('/datatable', [KlinikController::class, 'datatable'])->name('datatable');
+                Route::post('/destroy', [KlinikController::class, 'destroy'])->name('destroy');
             });
         });
 
