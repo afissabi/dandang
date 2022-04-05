@@ -18,6 +18,10 @@ use App\Http\Controllers\Master\KlinikController;
 |
 */
 
+Route::get('/', function () {
+    return view('front.page.home');
+});
+
 Route::get('/login', function () {
     return view('back.login');
 });
