@@ -110,6 +110,18 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/datatable', [KlinikController::class, 'datatable'])->name('datatable');
                 Route::post('/destroy', [KlinikController::class, 'destroy'])->name('destroy');
             });
+
+            Route::group([
+                'prefix' => 'poli',
+                'as' => 'poli.',
+            ], function () {
+                Route::get('/', [KlinikController::class, 'indexpoli'])->name('poliindex');
+                Route::post('/simpan', [KlinikController::class, 'storepoli'])->name('polistore');
+                Route::post('/edit', [KlinikController::class, 'editpoli'])->name('poliedit');
+                Route::post('/ubah', [KlinikController::class, 'ubahpoli'])->name('poliubah');
+                Route::post('/datatable', [KlinikController::class, 'datatablepoli'])->name('polidatatable');
+                Route::post('/destroy', [KlinikController::class, 'destroypoli'])->name('polidestroy');
+            });
         });
 
         Route::group([
