@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UmumController;
+use App\Http\Controllers\Web\WebController;
 use App\Http\Controllers\Master\MenuController;
 use App\Http\Controllers\Master\RoleController;
 use App\Http\Controllers\Master\UserController;
@@ -21,6 +23,8 @@ use App\Http\Controllers\Master\KlinikController;
 Route::get('/', function () {
     return view('front.page.home');
 });
+Route::get('/', [UmumController::class, 'beranda'])->name('home');
+Route::get('/tentang-kami', [UmumController::class, 'tentang'])->name('tentangkami');
 
 Route::get('/login', function () {
     return view('back.login');
@@ -33,6 +37,20 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('/dashboard', function () {
         return view('back.welcome.welcome');
     });
+
+    Route::group([
+        'prefix' => 'cms-website',
+        'as' => 'cms-website.',
+    ], function () {
+        Route::group([
+            'prefix' => 'tentang-kami',
+            'as' => 'tentang-kami.',
+        ], function () {
+            Route::get('/', [WebController::class, 'indextentang'])->name('tentangindex');
+            Route::post('/simpan', [WebController::class, 'storetentang'])->name('tentangstore');
+        });
+    });
+
     Route::get('/kamarhaji', [MenuController::class, 'kamarhaji'])->name('kamarhaji');
     Route::group([
         'prefix' => 'master',

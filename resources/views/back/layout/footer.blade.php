@@ -14,6 +14,8 @@
 <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
 <script src="{{ asset('assets/js/custom/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
+<script src="{{ asset('assets/js/custom/documentation/editors/ckeditor/classic.js') }}"></script>
+<script src="{{ asset('assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 @yield('custom_js')
