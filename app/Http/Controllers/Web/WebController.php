@@ -62,11 +62,13 @@ class WebController extends Controller
             $imageName = 'gambar-tentang-kami.jpg';
 
             $path = $request->file('gambar')->move('img/web', $imageName, 'public');
+        }else{
+            $imageName = 'default.jpg';
         }
 
         $data->type = 0;
         $data->isi  = $request->tentang;
-        $data->path = '/public/' . $path;
+        // $data->path = '/public/' . $path;
         $data->gambar = $imageName;
 
         $datav->type = 1;

@@ -12,7 +12,7 @@
                 <label class="col-lg-2 col-form-label text-lg-end required">Gambar Halaman :</label>
                 <div class="col-lg-10">
                     <div class="mt-1">
-                        <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(assets/media/avatars/blank.png)">
+                        <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('img/web/default.jpg' )}})">
                             <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ asset('img/web/' . $tentang->gambar )}})"></div>
                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
                                 <i class="bi bi-pencil-fill fs-7"></i>
