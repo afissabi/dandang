@@ -3,13 +3,56 @@
 @section('content')
 <div class="card card-flush shadow-sm">
     <div class="card-header border-0 pt-6 justify-content-end ribbon ribbon-start">
-        <div class="ribbon-label bg-primary" style="font-size: large;">Tentang Kami</div>
+        <div class="ribbon-label bg-primary" style="font-size: large;">Halaman Tentang Kami</div>
     </div>
     <div class="card-body py-5 table-responsive">
-        <form method="post" id="formtentang">
-            <textarea name="tentang" id="tentang">
-                {!! $tentang ? $tentang->isi : '' !!}
-            </textarea>
+        <form method="post" id="formtentang" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Gambar Halaman :</label>
+                <div class="col-lg-10">
+                    <div class="mt-1">
+                        <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(assets/media/avatars/blank.png)">
+                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ asset('img/web/' . $tentang->gambar )}})"></div>
+                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
+                                <i class="bi bi-pencil-fill fs-7"></i>
+                                <input type="file" name="gambar" accept=".png, .jpg, .jpeg" />
+                                <input type="hidden" name="gambar_remove" />
+                            </label>
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batalkan">
+                                <i class="bi bi-x fs-2"></i>
+                            </span>
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Hapus Gambar">
+                                <i class="bi bi-x fs-2"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                    @error('image')
+                        <div class="form-text">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Tentang Kami :</label>
+                <div class="col-lg-10">
+                    <textarea name="tentang" id="tentang">
+                        {!! $tentang ? $tentang->isi : '' !!}
+                    </textarea>
+                </div>
+            </div>
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Visi :</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="visi" id="visi" value="{!! $visi ? $visi->isi : '' !!}" placeholder="Visi Kami">
+                </div>
+            </div>
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Misi :</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="misi" id="misi" value="{!! $misi ? $misi->isi : '' !!}" placeholder="Misi Kami">
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Perbarui</button>
         </form>
     </div>
@@ -26,10 +69,29 @@
             console.error(error);
         });
     </script>
+    {{-- <script type="text/javascript">
+        function bacaGambar(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function (e) {
+                $('#gambar_nodin').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+        }
+    </script>
+    <script type="text/javascript">
+    $("#preview_gambar").change(function(){
+        bacaGambar(this);
+    });
+    </script> --}}
     <script>
         $(function () {
             $("#formtentang").submit(function(e) {
                 e.preventDefault();
+                let formData = new FormData(this);
 
                 swal.fire({
                     title: "Apa Anda Yakin?",
@@ -42,11 +104,12 @@
                 }).then(function(result) {
                     if (result.value) {
                         $.ajax({
-                            type: "post",
-                            url: "{{ url('cms-website/tentang-kami/simpan') }}",
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            dataType: "json",
-                            data: $('#formtentang').serialize()
+                            type:'POST',
+                            url: "{{ url('cms-website/tentang-kami/simpan') }}",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
                         })
                         .done(function(hasil) {
                             var tittle = "";
@@ -83,5 +146,36 @@
                 });
             });
         })
+    </script>
+
+    <script type="text/javascript">
+        function cekImageType(oInput, event) {
+            if(oInput.files[0].size > 2000000) {
+                alert('Maaf, file terlalu besar.. Maksimal 2MB')
+                oInput.value = "";
+                return false;
+            } else {
+                var _validFileExtensions = [".jpg", ".jpeg", ".png"];
+                if (oInput.type == "file") {
+                    var sFileName = oInput.value;
+                    if (sFileName.length > 0) {
+                        var blnValid = false;
+                        for (var j = 0; j < _validFileExtensions.length; j++) {
+                            var sCurExtension = _validFileExtensions[j];
+                                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                                blnValid = true;
+                                break;
+                            }
+                        }                   
+                        if (!blnValid) {
+                            alert("Maaf, hanya mendukung tipe: " + _validFileExtensions.join(", "));
+                            oInput.value = "";
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
     </script>
 @endsection
