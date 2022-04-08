@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="row mb-10">
-                <label class="col-lg-2 col-form-label text-lg-end required">Tentang Kami :</label>
+                <label class="col-lg-2 col-form-label text-lg-end required">Tentang Perusahaan :</label>
                 <div class="col-lg-10">
                     <textarea name="tentang" id="tentang">
                         {!! $tentang ? $tentang->isi : '' !!}
@@ -42,15 +42,35 @@
                 </div>
             </div>
             <div class="row mb-10">
-                <label class="col-lg-2 col-form-label text-lg-end required">Visi :</label>
+                <label class="col-lg-2 col-form-label text-lg-end required">Visi Perusahaan :</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" name="visi" id="visi" value="{!! $visi ? $visi->isi : '' !!}" placeholder="Visi Kami">
+                    <textarea name="visi" id="visi">
+                        {!! $visi ? $visi->isi : '' !!}
+                    </textarea>
                 </div>
             </div>
             <div class="row mb-10">
-                <label class="col-lg-2 col-form-label text-lg-end required">Misi :</label>
+                <label class="col-lg-2 col-form-label text-lg-end required">Misi Perusahaan :</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" name="misi" id="misi" value="{!! $misi ? $misi->isi : '' !!}" placeholder="Misi Kami">
+                    <textarea name="misi" id="misi">
+                        {!! $misi ? $misi->isi : '' !!}
+                    </textarea>
+                </div>
+            </div>
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Moto Perusahaan :</label>
+                <div class="col-lg-10">
+                    <textarea name="moto" id="moto">
+                        {!! $moto ? $moto->isi : '' !!}
+                    </textarea>
+                </div>
+            </div>
+            <div class="row mb-10">
+                <label class="col-lg-2 col-form-label text-lg-end required">Kebjikan Mutu :</label>
+                <div class="col-lg-10">
+                    <textarea name="mutu" id="mutu">
+                        {!! $mutu ? $mutu->isi : '' !!}
+                    </textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Perbarui</button>
@@ -63,6 +83,38 @@
     <script>
         ClassicEditor
         .create(document.querySelector('#tentang'), {
+            removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        ClassicEditor
+        .create(document.querySelector('#visi'), {
+            removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        ClassicEditor
+        .create(document.querySelector('#misi'), {
+            removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        ClassicEditor
+        .create(document.querySelector('#moto'), {
+            removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        ClassicEditor
+        .create(document.querySelector('#mutu'), {
             removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
         })
         .catch(error => {

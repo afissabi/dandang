@@ -49,6 +49,19 @@ Route::group(['middleware' => 'user'], function () {
             Route::get('/', [WebController::class, 'indextentang'])->name('tentangindex');
             Route::post('/simpan', [WebController::class, 'storetentang'])->name('tentangstore');
         });
+
+        Route::group([
+            'prefix' => 'artikel',
+            'as' => 'artikel.',
+        ], function () {
+            Route::group([
+                'prefix' => 'galeri',
+                'as' => 'galeri.',
+            ], function () {
+                Route::get('/', [WebController::class, 'indexgaleri'])->name('galeriindex');
+                Route::post('/simpan', [WebController::class, 'storegaleri'])->name('tentangstore');
+            });
+        });
     });
 
     Route::get('/kamarhaji', [MenuController::class, 'kamarhaji'])->name('kamarhaji');
