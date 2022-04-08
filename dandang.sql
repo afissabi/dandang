@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `m_about`;
 
 CREATE TABLE `m_about` (
   `id_about` int(11) NOT NULL AUTO_INCREMENT,
-  `type` char(2) NOT NULL COMMENT '0=Tentang Kami, 1=Visi, 2=Misi',
+  `type` char(2) NOT NULL COMMENT '0=Tentang Kami, 1=Visi, 2=Misi, 3=Moto, 4=mutu',
   `isi` text DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
@@ -33,14 +33,37 @@ CREATE TABLE `m_about` (
   `updated_by` timestamp NULL DEFAULT NULL,
   `deleted_by` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_about`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 STATS_AUTO_RECALC=0;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 STATS_AUTO_RECALC=0;
 
 /*Data for the table `m_about` */
 
 insert  into `m_about`(`id_about`,`type`,`isi`,`gambar`,`path`,`created_at`,`updated_at`,`deleted_at`,`created_by`,`updated_by`,`deleted_by`) values 
-(1,'0','<p>Isi tentang kami baru coy</p>','gambar-tentang-kami.jpg','/public/img/web\\gambar-tentang-kami.jpg','2022-04-07 03:34:57','2022-04-07 07:25:30',NULL,NULL,NULL,NULL),
-(2,'1','Visi kami baru',NULL,NULL,'2022-04-07 03:49:38','2022-04-07 07:25:30',NULL,NULL,NULL,NULL),
-(3,'2','Misi Kami baru',NULL,NULL,'2022-04-07 03:49:38','2022-04-07 07:25:30',NULL,NULL,NULL,NULL);
+(1,'0','<p>Sejarah singkat klinik kami</p>','default.jpg','/public/img/web\\gambar-tentang-kami.jpg','2022-04-07 03:34:57','2022-04-08 02:27:37',NULL,NULL,NULL,NULL),
+(2,'1','<p>Visi Perusahaan Kami</p>',NULL,NULL,'2022-04-07 03:49:38','2022-04-08 02:19:11',NULL,NULL,NULL,NULL),
+(3,'2','<p>Misi Perusahaan Kami</p>',NULL,NULL,'2022-04-07 03:49:38','2022-04-08 02:19:11',NULL,NULL,NULL,NULL),
+(4,'3','<p>Moto Perusahaan Kami Adalah Fast, Care, True</p>',NULL,NULL,'2022-04-08 02:19:11','2022-04-08 02:19:11',NULL,NULL,NULL,NULL),
+(5,'4','<p>Kebijakan dan Mutu Perusahaan Kami adalah memberikan pelayanan terbaik dalam peningkatan kesehatan</p>',NULL,NULL,'2022-04-08 02:27:37','2022-04-08 02:27:37',NULL,NULL,NULL,NULL);
+
+/*Table structure for table `m_galeri` */
+
+DROP TABLE IF EXISTS `m_galeri`;
+
+CREATE TABLE `m_galeri` (
+  `id_galeri` bigint(20) NOT NULL AUTO_INCREMENT,
+  `link` varchar(255) NOT NULL,
+  `type` char(2) NOT NULL COMMENT '0=gambar, 1=link youtube',
+  `judul` varchar(255) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_by` bigint(20) DEFAULT NULL,
+  `deleted_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_galeri`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `m_galeri` */
 
 /*Table structure for table `m_menu` */
 
@@ -63,7 +86,7 @@ CREATE TABLE `m_menu` (
   `updated_by` bigint(20) DEFAULT NULL,
   `deleted_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_menu`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `m_menu` */
 
@@ -96,7 +119,9 @@ insert  into `m_menu`(`id_menu`,`nama_menu`,`status`,`parent_id`,`sub_parent_id`
 (28,'Kasir','0',NULL,NULL,'1',4,'fa fa-calculator','kasir','2022-03-20 17:28:18','2022-03-20 17:28:18',NULL,NULL,NULL,NULL),
 (29,'Devisi','4',1,15,'1',3,NULL,'master/klinik/devisi','2022-03-22 00:41:29','2022-03-22 00:41:29',NULL,NULL,NULL,NULL),
 (30,'CMS Website','1',NULL,NULL,'1',4,'fas fa-chalkboard','cms-website','2022-04-06 04:48:04','2022-04-06 04:48:04',NULL,NULL,NULL,NULL),
-(31,'Tentang Kami','2',30,NULL,'1',1,'fas fa-quote-left','/cms-website/tentang-kami','2022-04-06 04:49:59','2022-04-06 06:38:55',NULL,NULL,NULL,NULL);
+(31,'Tentang Kami','2',30,NULL,'1',1,'fas fa-quote-left','/cms-website/tentang-kami','2022-04-06 04:49:59','2022-04-06 06:38:55',NULL,NULL,NULL,NULL),
+(32,'Artikel','3',30,NULL,'1',2,'fas fa-newspaper','cms-website/artikel','2022-04-08 03:33:34','2022-04-08 06:48:26',NULL,NULL,NULL,NULL),
+(33,'Galeri','4',30,32,'1',1,'fas fa-image','cms-website/artikel/galeri','2022-04-08 03:37:01','2022-04-08 03:37:52',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `m_menu_user` */
 
@@ -116,7 +141,7 @@ CREATE TABLE `m_menu_user` (
   `updated_by` int(11) DEFAULT NULL,
   `deleted_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_menu_user`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `m_menu_user` */
 
@@ -148,7 +173,9 @@ insert  into `m_menu_user`(`id_menu_user`,`id_menu`,`id_role`,`create_btn`,`edit
 (26,28,1,NULL,NULL,NULL,'2022-03-20 17:28:28','2022-03-20 17:28:28',NULL,NULL,NULL,NULL),
 (27,29,1,NULL,NULL,NULL,'2022-03-22 00:41:44','2022-03-22 00:41:44',NULL,NULL,NULL,NULL),
 (28,30,1,NULL,NULL,NULL,'2022-04-06 04:48:21','2022-04-06 04:48:21',NULL,NULL,NULL,NULL),
-(29,31,1,NULL,NULL,NULL,'2022-04-06 04:50:16','2022-04-06 04:50:16',NULL,NULL,NULL,NULL);
+(29,31,1,NULL,NULL,NULL,'2022-04-06 04:50:16','2022-04-06 04:50:16',NULL,NULL,NULL,NULL),
+(30,32,1,NULL,NULL,NULL,'2022-04-08 03:35:13','2022-04-08 03:35:13',NULL,NULL,NULL,NULL),
+(31,33,1,NULL,NULL,NULL,'2022-04-08 03:38:15','2022-04-08 03:38:15',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `m_role` */
 
