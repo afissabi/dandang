@@ -16,6 +16,7 @@
             <thead>
                 <tr role="row">
                     <th width="2%"><center>NO</center></th>
+                    <th><center>Tipe Galeri</center></th>
                     <th><center>Gambar/Link Video</center></th>
                     <th><center>Judul</center></th>
                     <th><center>Keterangan</center></th>
@@ -31,8 +32,8 @@
 
 {{-- Modal Tambah Data --}}
 <div class="modal fade" tabindex="-1" id="kt_modal_1">
-    <div class="modal-dialog">
-        <div class="modal-content" style="width: 125%;">
+    <div class="modal-dialog mw-700px">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Tambah Galeri</h5>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -43,28 +44,95 @@
                 <form method="post" class="kt-form kt-form--label-right" id="form">
                     <div class="row mb-10">
                         <label class="col-lg-3 col-form-label text-lg-end required">Pilih Type galeri :</label>
-                        <div class="col-lg-9">
-                            <div class="form-check form-check-custom form-check-solid form-check-lg">
-                                <input type="radio" name="type" value="single" />Single
-                                <input type="radio" name="type" value="single" />Singleasd
-                                <label class="form-check-label" for="flexCheckboxSm">
-                                    Gambar
-                                </label>
-                            </div>
-                            <div class="form-check form-check-custom form-check-solid form-check-lg">
-                                <input class="form-check-input" type="radio" value="" id="flexCheckboxSm"  />
-                                <label class="form-check-label" for="flexCheckboxSm">
-                                    Link Youtube
-                                </label>
-                            </div>
+                        <div class="col-lg-2">
+                            <center><input type="radio" name="type" value="0" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Gambar</p></center>
+                        </div>
+                        <div class="col-lg-2">
+                            <center><input type="radio" name="type" value="1" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Link Youtube</p></center>
                         </div>
                     </div>
-                    <div class="row mb-10">
-                        <label class="col-lg-2 col-form-label text-lg-end required">Gambar Galeri :</label>
-                        <div class="col-lg-10">
+                    <div class="row mb-10" id="vgambar" style="display:none">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Galeri :</label>
+                        <div class="col-lg-9">
                             <div class="mt-1">
                                 <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('img/web/default.jpg' )}})">
                                     <div class="image-input-wrapper w-125px h-125px" style="background-image: url()"></div>
+                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="gambar" id="addgambar" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" name="gambar_remove"/>
+                                    </label>
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Batalkan">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Hapus Gambar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            @error('image')
+                                <div class="form-text">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-10" id="vlink" style="display:none">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Link Video :</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="link" id="addlink" class="form-control" placeholder="Link Video">
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Galeri :</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="judul" class="form-control" placeholder="Judul Galeri" required>
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Keterangan :</label>
+                        <div class="col-lg-9">
+                            <textarea name="keterangan" class="form-control" rows="4" placeholder="Keterangan"></textarea>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Edit Data --}}
+<div class="modal fade" tabindex="-1" id="edit">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 125%;">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Data Galeri</h5>
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="kt-form kt-form--label-right" id="formedit">
+                    <input type="hidden" class="form-control" id="id_galeri" name="id_galeri">
+                    <div class="row mb-10">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Pilih Type galeri :</label>
+                        <div class="col-lg-2">
+                            <center><input type="radio" name="type" value="0" id="edit_type_0" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Gambar</p></center>
+                        </div>
+                        <div class="col-lg-2">
+                            <center><input type="radio" name="type" value="1" id="edit_type_1" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Link Youtube</p></center>
+                        </div>
+                    </div>
+                    <div class="row mb-10" id="egambar" style="display:none">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Galeri :</label>
+                        <div class="col-lg-9">
+                            <div class="mt-1">
+                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('img/web/default.jpg' )}})">
+                                    <div class="image-input-wrapper w-125px h-125px" id="gbth"></div>
                                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Ubah Gambar">
                                         <i class="bi bi-pencil-fill fs-7"></i>
                                         <input type="file" name="gambar" accept=".png, .jpg, .jpeg" />
@@ -84,82 +152,22 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-10">
-                        <label class="col-lg-2 col-form-label text-lg-end required">Tentang Perusahaan :</label>
-                        <div class="col-lg-10">
-                            <textarea name="tentang" id="tentang">
-                                
-                            </textarea>
+                    <div class="row mb-10" id="elink" style="display:none">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Link Video :</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="link" class="form-control" placeholder="Link Video" id="edit_link" required>
                         </div>
                     </div>
                     <div class="row mb-10">
-                        <label class="col-lg-2 col-form-label text-lg-end required">Visi Perusahaan :</label>
-                        <div class="col-lg-10">
-                            <textarea name="visi" id="visi">
-                                
-                            </textarea>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- Modal Edit Data --}}
-<div class="modal fade" tabindex="-1" id="edit">
-    <div class="modal-dialog">
-        <div class="modal-content" style="width: 125%;">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Data Poli Klinik</h5>
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="svg-icon svg-icon-2x"></span>
-                </div>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="kt-form kt-form--label-right" id="formedit">
-                    <input type="hidden" class="form-control" id="id_poli" name="id_poli">
-                    <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Nama Poli :</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" name="nama_poli" id="edit_poli" placeholder="Nama Poli">
+                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Galeri :</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="judul" class="form-control" placeholder="Judul Galeri" id="edit_judul" required>
                         </div>
                     </div>
                     <div class="row mb-10">
                         <label class="col-lg-3 col-form-label text-lg-end required">Keterangan :</label>
-                        <div class="col-lg-8 col-xl-8">
-                            <textarea class="form-control" name="keterangan" id="edit_keterangan" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end">Telp :</label>
-                        <div class="col-lg-8 col-xl-8">
-                            <input type="text" class="form-control" name="telp" id="edit_telp" placeholder="Telp">
-                        </div>
-                    </div>
-                    <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end">Lokasi Klinik :</label>
-                        <div class="col-lg-8">
-                            <select class="form-select" data-control="select2" name="klinik" id="edit_klinik" data-placeholder="Lokasi Klinik">
-                                <option></option>
-                                
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Klinik Aktif :</label>
-                        <div class="col-lg-4 col-xl-2">
-                            <label class="form-check form-switch form-check-custom form-check-solid">
-                                <span class="form-check-label fw-bold text-muted">Non Aktif</span>&nbsp;&nbsp;
-                                <input class="form-check-input" name="aktif_poli" type="checkbox" value="1" checked="checked" />
-                                <span class="form-check-label fw-bold text-muted">Aktif</span>
-                            </label>
+                        <div class="col-lg-9">
+                            <textarea name="keterangan" class="form-control" rows="4" placeholder="Keterangan" id="edit_keterangan"></textarea>
                         </div>
                     </div>
             </div>
@@ -176,59 +184,28 @@
 
 @section('custom_js')
 <script>
-    var tabelData;
-
-    $(function () {
-        tabelData = $('#table').DataTable({
-            language: {
-                lengthMenu: "Show _MENU_",
-            },
-            dom:
-            "<'row'" +
-            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-            ">" +
-
-            "<'table-responsive'tr>" +
-
-            "<'row'" +
-            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-            ">",
-            ajax: {
-                url : "{{ url('master/klinik/poli/datatable') }}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type: "POST",
-                data: function(data){
-                }
-            },
-            columnDefs: [{
-                targets: [2, 3, 4],
-                className: ''
-            }]
-        });
-    })
-
     $(function () {
         $("#form").submit(function(e) {
             e.preventDefault();
+            let formData = new FormData(this);
 
             swal.fire({
                 title: "Apa Anda Yakin?",
-                text: "Menambah Data Poli Baru",
+                text: "Menambah Galeri Web Anda ?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Ya, Tambah!",
+                confirmButtonText: "Ya, Perbarui!",
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true,
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        type: "post",
-                        url: "{{ url('master/klinik/poli/simpan') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        dataType: "json",
-                        data: $('#form').serialize()
+                        type:'POST',
+                        url: "{{ url('cms-website/artikel/galeri/simpan') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
                     })
                     .done(function(hasil) {
                         var tittle = "";
@@ -265,152 +242,108 @@
             });
         });
     })
+</script>
+<script>
+    var tabelData;
 
     $(function () {
-        $("#formedit").submit(function(e) {
-            e.preventDefault();
+        tabelData = $('#table').DataTable({
+            language: {
+                lengthMenu: "Show _MENU_",
+            },
+            dom:
+            "<'row'" +
+            "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+            "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+            ">" +
 
-            swal.fire({
-                title: "Apa Anda Yakin?",
-                text: "Mengedit data poli tersebut",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Ya, Yakin!",
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "post",
-                        url: "{{ url('master/klinik/poli/ubah') }}",
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        dataType: "json",
-                        data: $('#formedit').serialize()
-                    })
-                    .done(function(hasil) {
-                        var tittle = "";
-                        var icon = "";
+            "<'table-responsive'tr>" +
 
-                        if (hasil.status == true) {
-                            title = "Berhasil!";
-                            icon = "success";
-
-                            swal.fire({
-                                title: title,
-                                text: hasil.pesan,
-                                icon: icon,
-                                button: "OK!",
-                            }).then(function() {
-                                $('#edit').modal('hide');
-                                load_data_table();
-                            });
-                        } else {
-                            title = "Gagal!";
-                            icon = "error";
-
-                            swal.fire({
-                                title: title,
-                                text: hasil.pesan,
-                                icon: icon,
-                                button: "OK!",
-                            })
-                        }
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                        errorNotification();
-                    });
+            "<'row'" +
+            "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+            "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+            ">",
+            ajax: {
+                url : "{{ url('cms-website/artikel/galeri/datatablegaleri') }}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: "POST",
+                data: function(data){
                 }
-            });
+            },
+            columnDefs: [{
+                targets: [2, 3, 4],
+                className: ''
+            }]
         });
     })
 
-    function hapus(id_data) {
-            swal.fire({
-                title: "Apa Anda Yakin?",
-                text: "Menghapus Data Poli",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Ya, Hapus!",
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "post",
-                        url: "{{ url('master/klinik/poli/destroy') }}",
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        dataType: "json",
-                        data: {
-                            id : id_data
-                        }
-                    })
-                    .done(function(hasil) {
-                        var tittle = "";
-                        var icon = "";
+    /* detail informasi subjek survey per kelurahan */
+    $('#table').on('click', '.edit', function (e) {
+        var galeri = $(this).data('id_galeri');
 
-                        if (hasil.status == true) {
-                            title = "Berhasil!";
-                            icon = "success";
-
-                            swal.fire({
-                                title: title,
-                                text: hasil.pesan,
-                                icon: icon,
-                                button: "OK!",
-                            }).then(function(result) {
-                                load_data_table();
-                            })
-                        } else {
-                            title = "Gagal!";
-                            icon = "error";
-
-                            swal.fire({
-                                title: title,
-                                text: hasil.pesan,
-                                icon: icon,
-                                button: "OK!",
-                            })
-                        }
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                        errorNotification();
-                    });
-                }
-            });
-        }
-
-        /* detail informasi subjek survey per kelurahan */
-        $('#table').on('click', '.edit', function (e) {
-            var poli = $(this).data('id_poli');
-
-            $.ajax({
-                url: "{{ url('master/klinik/poli/edit') }}",
-                type: "post",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    poli: poli,
-                },
-                success: function(msg){
-                    // Add response in Modal body
-                    if(msg){
-                        $('#id_poli').val(msg.id_poli);
-                        $('#edit_poli').val(msg.nama_poli);
-                        $('#edit_keterangan').val(msg.keterangan);
-                        $('#edit_telp').val(msg.telp);
-                        $('#edit_klinik').val(msg.klinik_id).trigger("change");
+        $.ajax({
+            url: "{{ url('cms-website/artikel/galeri/edit') }}",
+            type: "post",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                galeri: galeri,
+            },
+            success: function(msg){
+                // Add response in Modal body
+                if(msg){
+                    $('#id_galeri').val(msg.id_galeri);
+                    $('#edit_link').val(msg.link);
+                    $('#edit_gambar').val(msg.link);
+                    $("#gbth").css("background-image", "url('" + msg.link + "')");
+                    if (msg.type == 1){
+                        $('#edit_type_1').prop('checked', true);
+                        $('#edit_type_0').prop('checked', false);
+                        $("#egambar").hide();
+                        $("#elink").show();
                     }else{
-                        $('#id_poli').val('');
-                        $('#edit_poli').val('');
-                        $('#edit_keterangan').val('');
-                        $('#edit_telp').val('');
-                        $('#edit_klinik').val('').trigger("change");
+                        $('#edit_type_0').prop('checked', true);
+                        $('#edit_type_1').prop('checked', false);
+                        $("#egambar").show();
+                        $("#elink").hide();
                     }
-                    // Display Modal
-                    $('#edit').modal('show');
-                }
-            });
-        });
 
-        function load_data_table() {
-            tabelData.ajax.reload(null, 'refresh');
+                    $('#edit_keterangan').val(msg.keterangan);
+                    $('#edit_judul').val(msg.judul);
+                }else{
+                    $('#id_galeri').val('');
+                    $('#edit_link').val('');
+                    $('#edit_type').val('');
+                    $('#edit_keterangan').val('');
+                    $('#edit_judul').val('');
+                }
+                // Display Modal
+                $('#edit').modal('show');
+            }
+        });
+    });
+
+    function load_data_table() {
+        tabelData.ajax.reload(null, 'refresh');
+    }
+</script>
+<script type="text/javascript">
+    $('input[type="radio"]').click(function () {
+        var inputValue = $(this).attr("value");
+        if (inputValue == 0) {
+            $("#vgambar").show();
+            $("#vlink").hide();
+            $("#egambar").show();
+            $("#elink").hide();
+            $("#addgambar").prop('required',true);
+            $("#addlink").removeAttr('required');
+        } else {
+            $("#vgambar").hide();
+            $("#vlink").show();
+            $("#egambar").hide();
+            $("#elink").show();
+            $("#addlink").prop('required',true);
+            $("#addgambar").removeAttr('required');
         }
+    });
 </script>
 @endsection

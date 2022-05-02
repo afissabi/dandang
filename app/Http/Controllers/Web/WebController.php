@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\web\M_about;
+use App\Models\web\M_galeri;
+use Carbon\Carbon;
 use DB;
+use Image;
 use Str;
 
 class WebController extends Controller
@@ -70,7 +73,7 @@ class WebController extends Controller
         } else {
             $datamu = new M_about;
         }
-        
+
         // $request->validate([
         //     'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         // ]);
@@ -134,5 +137,106 @@ class WebController extends Controller
         // ];
 
         return view('back.web.galeri');
+    }
+
+    public function tablegaleri()
+    {
+        $datas = M_galeri::OrderBy('id_galeri', 'ASC')->get();
+
+        $data_tables = [];
+        foreach ($datas as $key => $value) {
+            $data_tables[$key][] = $key + 1;
+            if($value->type == 0){
+                $data_tables[$key][] = '<center><i class="fa fa-image"></i> Gambar</center>';
+                $data_tables[$key][] = '<center><img src="'. asset('img/web/galeri/thumbnail/' . $value->link ) . '" style="width: 100px;"></center>';
+            }else{
+                $data_tables[$key][] = '<center><i class="fa fa-video"></i> Link Video</center>';
+                $data_tables[$key][] = $value->link;
+            }
+            $data_tables[$key][] = $value->judul;
+            $data_tables[$key][] = $value->keterangan;
+
+            $aksi = '';
+
+            $aksi .= '&nbsp;<a href="javascript:void(0)" class="edit text-dark" data-id_galeri="' . $value->id_galeri . '"><i class="fa fa-edit text-info"></i> Edit</a>';
+
+            $aksi .= '&nbsp; <a href="#!" onClick="hapus(' . $value->id_galeri . ')"><i class="fa fa-trash text-danger"></i> Hapus</a>';
+
+            $data_tables[$key][] = $aksi;
+        }
+
+        $data = [
+            "data" => $data_tables
+        ];
+
+        // dd($datas);
+        return response()->json($data);
+    }
+
+    public function storegaleri(Request $request)
+    {
+        $data = new M_galeri;
+        $id_galeri = M_galeri::max('id_galeri') + 1;
+
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/galeri/thumbnail');
+            $img = Image::make($image->path());
+            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $id_galeri . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/galeri/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = $request->link;
+        }
+
+        $data->type       = $request->type;
+        $data->judul      = $request->judul;
+        $data->keterangan = $request->keterangan;
+        $data->link       = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editgaleri(Request $request)
+    {
+        $data = M_galeri::findOrFail($request->galeri);
+
+        if($data->type == 0){
+            $link = asset('img/web/galeri/thumbnail/' . $data->link);
+        }else{
+            $link = $data->link;
+        }
+        
+        $data =[
+            'link'          => $link,
+            'type'          => $data->type,
+            'judul'         => $data->judul,
+            'keterangan'    => $data->keterangan,
+            'id_galeri'     => $data->id_galeri,
+        ];
+
+        return response()->json($data);
     }
 }

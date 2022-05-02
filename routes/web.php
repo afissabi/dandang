@@ -60,6 +60,9 @@ Route::group(['middleware' => 'user'], function () {
             ], function () {
                 Route::get('/', [WebController::class, 'indexgaleri'])->name('galeriindex');
                 Route::post('/simpan', [WebController::class, 'storegaleri'])->name('tentangstore');
+                Route::post('/datatablegaleri', [WebController::class, 'tablegaleri'])->name('galeritable');
+                Route::post('/edit', [WebController::class, 'editgaleri'])->name('galeriedit');
+                Route::post('/ubah', [WebController::class, 'ubahgaleri'])->name('galeriubah');
             });
         });
     });
