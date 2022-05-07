@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\web\M_about;
 use App\Models\web\M_galeri;
+use App\Models\web\M_aktivitas;
+use App\Models\web\M_artikel;
 use Carbon\Carbon;
 use DB;
 use Image;
@@ -238,5 +240,225 @@ class WebController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function ubahgaleri(Request $request)
+    {
+        $data = M_galeri::findOrFail($request->id_galeri);
+        
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/galeri/thumbnail');
+            $img = Image::make($image->path());
+            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $request->id_galeri . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/galeri/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = $request->link;
+        }
+
+        $data->type       = $request->type;
+        $data->judul      = $request->judul;
+        $data->keterangan = $request->keterangan;
+        $data->link       = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroygaleri(Request $request)
+    {
+        $data = M_galeri::findOrFail($request->id);
+
+        if ($data->delete()) {
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Terhapus!',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Terhapus!',
+            ]);
+        }
+    }
+
+    // Controller Untuk Aktivitas
+    public function indexaktivitas()
+    {
+        return view('back.web.aktivitas');
+    }
+
+    public function tableaktivitas()
+    {
+        $datas = M_aktivitas::OrderBy('id_aktivitas', 'ASC')->get();
+
+        $data_tables = [];
+        foreach ($datas as $key => $value) {
+            $data_tables[$key][] = $key + 1;
+            $data_tables[$key][] = '<center><img src="'. asset('img/web/aktivitas/thumbnail/' . $value->gambar ) . '" style="width: 100px;"></center>';
+            $data_tables[$key][] = $value->judul;
+            $data_tables[$key][] = $value->keterangan;
+
+            $aksi = '';
+
+            $aksi .= '&nbsp;<a href="javascript:void(0)" class="edit text-dark" data-id_aktivitas="' . $value->id_aktivitas . '"><i class="fa fa-edit text-info"></i> Edit</a>';
+
+            $aksi .= '&nbsp; <a href="#!" onClick="hapus(' . $value->id_aktivitas . ')"><i class="fa fa-trash text-danger"></i> Hapus</a>';
+
+            $data_tables[$key][] = $aksi;
+        }
+
+        $data = [
+            "data" => $data_tables
+        ];
+
+        // dd($datas);
+        return response()->json($data);
+    }
+
+    public function storeaktivitas(Request $request)
+    {
+        $data = new M_aktivitas;
+        $id_aktivitas = M_aktivitas::max('id_aktivitas') + 1;
+
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/aktivitas/thumbnail');
+            $img = Image::make($image->path());
+            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $id_aktivitas . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/aktivitas/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = 'default.jpg';
+        }
+
+        $data->judul      = $request->judul;
+        $data->keterangan = $request->keterangan;
+        $data->gambar     = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editaktivitas(Request $request)
+    {
+        $data = M_aktivitas::findOrFail($request->aktivitas);
+
+        $link = asset('img/web/aktivitas/thumbnail/' . $data->gambar);
+        
+        $data =[
+            'gambar'        => $gambar,
+            'judul'         => $data->judul,
+            'keterangan'    => $data->keterangan,
+            'id_aktivitas'  => $data->id_aktivitas,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function ubahaktivitas(Request $request)
+    {
+        $data = M_aktivitas::findOrFail($request->id_aktivitas);
+        
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/aktivitas/thumbnail');
+            $img = Image::make($image->path());
+            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $request->id_aktivitas . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/aktivitas/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = 'default.jpg';
+        }
+
+        $data->judul      = $request->judul;
+        $data->keterangan = $request->keterangan;
+        $data->gambar     = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroyaktivitas(Request $request)
+    {
+        $data = M_aktivitas::findOrFail($request->id);
+
+        if ($data->delete()) {
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Terhapus!',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Terhapus!',
+            ]);
+        }
     }
 }

@@ -1,5 +1,15 @@
 @extends('back.layout.app')
 
+@section('custom_css')
+    <style>
+        /* #loading{
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+        } */
+    </style>
+@endsection
+
 @section('content')
 <div class="card card-flush shadow-sm">
     <div class="card-header border-0 pt-6 justify-content-end ribbon ribbon-start">
@@ -180,10 +190,27 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Loading --}}
+<div class="modal fade" tabindex="-1" id="loading" style="">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 85%;background-color: rgba(0,0,0,.0001) !important;box-shadow: none;">
+            <div class="modal-body">
+                <center>
+                    <i class="fa fa-spinner fa-spin" style="font-size: 85px;color: cadetblue;"></i>
+                    <br><br>
+                    <h3 style="color: #ffffff;background: cadetblue;">Proses menyimpan data...</h3>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('custom_js')
 <script>
+    // $("#loading").hide();
+
     $(function () {
         $("#form").submit(function(e) {
             e.preventDefault();
@@ -196,8 +223,10 @@
                 showCancelButton: true,
                 confirmButtonText: "Ya, Perbarui!",
                 closeOnConfirm: false,
-                showLoaderOnConfirm: true,
+                allowOutsideClick: false,
             }).then(function(result) {
+                $('#loading').modal({backdrop:'static', keyboard:false});
+                $('#loading').modal('show');
                 if (result.value) {
                     $.ajax({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -210,6 +239,7 @@
                     .done(function(hasil) {
                         var tittle = "";
                         var icon = "";
+                        $('#loading').modal('hide');
 
                         if (hasil.status == true) {
                             title = "Berhasil!";
@@ -220,7 +250,9 @@
                                 text: hasil.pesan,
                                 icon: icon,
                                 button: "OK!",
+                                allowOutsideClick: false,
                             }).then(function() {
+                                $('#loading').modal('hide');
                                 $('#kt_modal_1').modal('hide');
                                 load_data_table();
                             });
@@ -242,6 +274,120 @@
             });
         });
     })
+
+    $(function () {
+        $("#formedit").submit(function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            swal.fire({
+                title: "Apa Anda Yakin?",
+                text: "Memperbarui galeri web anda ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Perbarui!",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }).then(function(result) {
+                
+                if (result.value) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        type:'POST',
+                        url: "{{ url('cms-website/artikel/galeri/ubah') }}",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                    })
+                    .done(function(hasil) {
+                        var tittle = "";
+                        var icon = "";
+
+                        if (hasil.status == true) {
+                            title = "Berhasil!";
+                            icon = "success";
+
+                            swal.fire({
+                                title: title,
+                                text: hasil.pesan,
+                                icon: icon,
+                                button: "OK!",
+                            }).then(function() {
+                                load_data_table();
+                                $('#edit').modal('hide');
+                            });
+                        } else {
+                            title = "Gagal!";
+                            icon = "error";
+
+                            swal.fire({
+                                title: title,
+                                text: hasil.pesan,
+                                icon: icon,
+                                button: "OK!",
+                            })
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        errorNotification();
+                    });
+                }
+            });
+        });
+    })
+
+    function hapus(id_data) {
+            swal.fire({
+                title: "Apa Anda Yakin?",
+                text: "Menghapus Data Galeri ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "post",
+                        url: "{{ url('cms-website/artikel/galeri/destroy') }}",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        dataType: "json",
+                        data: {
+                            id : id_data
+                        }
+                    })
+                    .done(function(hasil) {
+                        var tittle = "";
+                        var icon = "";
+
+                        if (hasil.status == true) {
+                            title = "Berhasil!";
+                            icon = "success";
+
+                            swal.fire({
+                                title: title,
+                                text: hasil.pesan,
+                                icon: icon,
+                                button: "OK!",
+                            }).then(function(result) {
+                                load_data_table();
+                            })
+                        } else {
+                            title = "Gagal!";
+                            icon = "error";
+
+                            swal.fire({
+                                title: title,
+                                text: hasil.pesan,
+                                icon: icon,
+                                button: "OK!",
+                            })
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        errorNotification();
+                    });
+                }
+            });
+        }
 </script>
 <script>
     var tabelData;
@@ -326,6 +472,7 @@
         tabelData.ajax.reload(null, 'refresh');
     }
 </script>
+
 <script type="text/javascript">
     $('input[type="radio"]').click(function () {
         var inputValue = $(this).attr("value");

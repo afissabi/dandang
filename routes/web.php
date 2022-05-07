@@ -63,6 +63,31 @@ Route::group(['middleware' => 'user'], function () {
                 Route::post('/datatablegaleri', [WebController::class, 'tablegaleri'])->name('galeritable');
                 Route::post('/edit', [WebController::class, 'editgaleri'])->name('galeriedit');
                 Route::post('/ubah', [WebController::class, 'ubahgaleri'])->name('galeriubah');
+                Route::post('/destroy', [WebController::class, 'destroygaleri'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'aktivitas',
+                'as' => 'aktivitas.',
+            ], function () {
+                Route::get('/', [WebController::class, 'indexaktivitas'])->name('aktivindex');
+                Route::post('/simpan', [WebController::class, 'storeaktivitas'])->name('aktivstore');
+                Route::post('/datatable', [WebController::class, 'tableaktivitas'])->name('aktivtable');
+                Route::post('/edit', [WebController::class, 'editaktivitas'])->name('aktivedit');
+                Route::post('/ubah', [WebController::class, 'ubahaktivitas'])->name('aktivubah');
+                Route::post('/destroy', [WebController::class, 'destroyaktivitas'])->name('destroy');
+            });
+
+            Route::group([
+                'prefix' => 'berita',
+                'as' => 'berita.',
+            ], function () {
+                Route::get('/', [WebController::class, 'indexnews'])->name('beritaindex');
+                Route::post('/simpan', [WebController::class, 'storenews'])->name('beritastore');
+                Route::post('/datatable', [WebController::class, 'tablenews'])->name('beritatable');
+                Route::post('/edit', [WebController::class, 'editnews'])->name('beritaedit');
+                Route::post('/ubah', [WebController::class, 'ubahnews'])->name('beritaubah');
+                Route::post('/destroy', [WebController::class, 'destroynews'])->name('destroy');
             });
         });
     });
