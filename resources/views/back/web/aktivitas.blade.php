@@ -51,16 +51,7 @@
             <div class="modal-body">
                 <form method="post" class="kt-form kt-form--label-right" id="form">
                     <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Pilih Type galeri :</label>
-                        <div class="col-lg-2">
-                            <center><input type="radio" name="type" value="0" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Gambar</p></center>
-                        </div>
-                        <div class="col-lg-2">
-                            <center><input type="radio" name="type" value="1" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Link Youtube</p></center>
-                        </div>
-                    </div>
-                    <div class="row mb-10" id="vgambar" style="display:none">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Galeri :</label>
+                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Aktivitas/Kegiatan :</label>
                         <div class="col-lg-9">
                             <div class="mt-1">
                                 <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('img/web/default.jpg' )}})">
@@ -84,16 +75,10 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-10" id="vlink" style="display:none">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Link Video :</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="link" id="addlink" class="form-control" placeholder="Link Video">
-                        </div>
-                    </div>
                     <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Galeri :</label>
+                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Aktivitas/Kegiatan :</label>
                         <div class="col-lg-9">
-                            <input type="text" name="judul" class="form-control" placeholder="Judul Galeri" required>
+                            <input type="text" name="judul" class="form-control" placeholder="Judul Aktivitas/Kegiatan" required>
                         </div>
                     </div>
                     <div class="row mb-10">
@@ -118,25 +103,16 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width: 125%;">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Data Galeri</h5>
+                <h5 class="modal-title">Edit Data Aktivitas/Kegiatan</h5>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-2x"></span>
                 </div>
             </div>
             <div class="modal-body">
                 <form method="post" class="kt-form kt-form--label-right" id="formedit">
-                    <input type="hidden" class="form-control" id="id_galeri" name="id_galeri">
+                    <input type="hidden" class="form-control" id="id_aktivitas" name="id_aktivitas">
                     <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Pilih Type galeri :</label>
-                        <div class="col-lg-2">
-                            <center><input type="radio" name="type" value="0" id="edit_type_0" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Gambar</p></center>
-                        </div>
-                        <div class="col-lg-2">
-                            <center><input type="radio" name="type" value="1" id="edit_type_1" style="width: 30px;height: 30px;margin-top: 5px;"/><p>Link Youtube</p></center>
-                        </div>
-                    </div>
-                    <div class="row mb-10" id="egambar" style="display:none">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Galeri :</label>
+                        <label class="col-lg-3 col-form-label text-lg-end required">Gambar Aktivitas/Kegiatan :</label>
                         <div class="col-lg-9">
                             <div class="mt-1">
                                 <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('img/web/default.jpg' )}})">
@@ -160,16 +136,10 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row mb-10" id="elink" style="display:none">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Link Video :</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="link" class="form-control" placeholder="Link Video" id="edit_link" required>
-                        </div>
-                    </div>
                     <div class="row mb-10">
-                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Galeri :</label>
+                        <label class="col-lg-3 col-form-label text-lg-end required">Judul Aktivitas/Kegiatan :</label>
                         <div class="col-lg-9">
-                            <input type="text" name="judul" class="form-control" placeholder="Judul Galeri" id="edit_judul" required>
+                            <input type="text" name="judul" class="form-control" placeholder="Judul Aktivitas/Kegiatan" id="edit_judul" required>
                         </div>
                     </div>
                     <div class="row mb-10">
@@ -216,7 +186,7 @@
 
             swal.fire({
                 title: "Apa Anda Yakin?",
-                text: "Menambah Galeri Web Anda ?",
+                text: "Menambah Aktivitas/Kegiatan Anda ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ya, Perbarui!",
@@ -229,7 +199,7 @@
                     $.ajax({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         type:'POST',
-                        url: "{{ url('cms-website/artikel/galeri/simpan') }}",
+                        url: "{{ url('cms-website/artikel/aktivitas/simpan') }}",
                         data: formData,
                         contentType: false,
                         processData: false,
@@ -280,7 +250,7 @@
 
             swal.fire({
                 title: "Apa Anda Yakin?",
-                text: "Memperbarui galeri web anda ?",
+                text: "Memperbarui Aktivitas/Kegiatan anda ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ya, Perbarui!",
@@ -292,7 +262,7 @@
                     $.ajax({
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         type:'POST',
-                        url: "{{ url('cms-website/artikel/galeri/ubah') }}",
+                        url: "{{ url('cms-website/artikel/aktivitas/ubah') }}",
                         data: formData,
                         contentType: false,
                         processData: false,
@@ -336,7 +306,7 @@
     function hapus(id_data) {
             swal.fire({
                 title: "Apa Anda Yakin?",
-                text: "Menghapus Data Galeri ?",
+                text: "Menghapus Data Aktivitas/Kegiatan ?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ya, Hapus!",
@@ -346,7 +316,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "post",
-                        url: "{{ url('cms-website/artikel/galeri/destroy') }}",
+                        url: "{{ url('cms-website/artikel/aktivitas/destroy') }}",
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         dataType: "json",
                         data: {
@@ -408,7 +378,7 @@
             "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
             ">",
             ajax: {
-                url : "{{ url('cms-website/artikel/galeri/datatablegaleri') }}",
+                url : "{{ url('cms-website/artikel/aktivitas/datatable') }}",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "POST",
                 data: function(data){
@@ -423,40 +393,25 @@
 
     /* detail informasi subjek survey per kelurahan */
     $('#table').on('click', '.edit', function (e) {
-        var galeri = $(this).data('id_galeri');
+        var aktivitas = $(this).data('id_aktivitas');
 
         $.ajax({
-            url: "{{ url('cms-website/artikel/galeri/edit') }}",
+            url: "{{ url('cms-website/artikel/aktivitas/edit') }}",
             type: "post",
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data: {
-                galeri: galeri,
+                aktivitas: aktivitas,
             },
             success: function(msg){
                 // Add response in Modal body
                 if(msg){
-                    $('#id_galeri').val(msg.id_galeri);
-                    $('#edit_link').val(msg.link);
-                    $('#edit_gambar').val(msg.link);
-                    $("#gbth").css("background-image", "url('" + msg.link + "')");
-                    if (msg.type == 1){
-                        $('#edit_type_1').prop('checked', true);
-                        $('#edit_type_0').prop('checked', false);
-                        $("#egambar").hide();
-                        $("#elink").show();
-                    }else{
-                        $('#edit_type_0').prop('checked', true);
-                        $('#edit_type_1').prop('checked', false);
-                        $("#egambar").show();
-                        $("#elink").hide();
-                    }
-
+                    $('#id_aktivitas').val(msg.id_aktivitas);
+                    $('#edit_gambar').val(msg.gambar);
+                    $("#gbth").css("background-image", "url('" + msg.gambar + "')");
                     $('#edit_keterangan').val(msg.keterangan);
                     $('#edit_judul').val(msg.judul);
                 }else{
-                    $('#id_galeri').val('');
-                    $('#edit_link').val('');
-                    $('#edit_type').val('');
+                    $('#id_aktivitas').val('');
                     $('#edit_keterangan').val('');
                     $('#edit_judul').val('');
                 }
@@ -469,26 +424,5 @@
     function load_data_table() {
         tabelData.ajax.reload(null, 'refresh');
     }
-</script>
-
-<script type="text/javascript">
-    $('input[type="radio"]').click(function () {
-        var inputValue = $(this).attr("value");
-        if (inputValue == 0) {
-            $("#vgambar").show();
-            $("#vlink").hide();
-            $("#egambar").show();
-            $("#elink").hide();
-            $("#addgambar").prop('required',true);
-            $("#addlink").removeAttr('required');
-        } else {
-            $("#vgambar").hide();
-            $("#vlink").show();
-            $("#egambar").hide();
-            $("#elink").show();
-            $("#addlink").prop('required',true);
-            $("#addgambar").removeAttr('required');
-        }
-    });
 </script>
 @endsection

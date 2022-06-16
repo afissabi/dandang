@@ -348,7 +348,7 @@ class WebController extends Controller
             $image = $request->file('gambar');
             $destinationPath = public_path('/img/web/aktivitas/thumbnail');
             $img = Image::make($image->path());
-            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $id_aktivitas . '.jpg';
+            $imageName =  'av-' . Carbon::now()->format("Y-m-d") . '-' . $id_aktivitas . '.jpg';
 
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
@@ -388,7 +388,7 @@ class WebController extends Controller
     {
         $data = M_aktivitas::findOrFail($request->aktivitas);
 
-        $link = asset('img/web/aktivitas/thumbnail/' . $data->gambar);
+        $gambar = asset('img/web/aktivitas/thumbnail/' . $data->gambar);
         
         $data =[
             'gambar'        => $gambar,
@@ -408,7 +408,7 @@ class WebController extends Controller
             $image = $request->file('gambar');
             $destinationPath = public_path('/img/web/aktivitas/thumbnail');
             $img = Image::make($image->path());
-            $imageName = $request->type . '-' . Carbon::now()->format("Y-m-d") . '-' . $request->id_aktivitas . '.jpg';
+            $imageName = 'av-' . Carbon::now()->format("Y-m-d") . '-' . $request->id_aktivitas . '.jpg';
 
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
@@ -447,6 +447,163 @@ class WebController extends Controller
     public function destroyaktivitas(Request $request)
     {
         $data = M_aktivitas::findOrFail($request->id);
+
+        if ($data->delete()) {
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Terhapus!',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Terhapus!',
+            ]);
+        }
+    }
+
+    // Controller Untuk Berita
+    public function indexnews()
+    {
+        return view('back.web.artikel');
+    }
+
+    public function tablenews()
+    {
+        $datas = M_artikel::OrderBy('id_artikel', 'ASC')->get();
+
+        $data_tables = [];
+        foreach ($datas as $key => $value) {
+            $data_tables[$key][] = $key + 1;
+            $data_tables[$key][] = '<center><img src="'. asset('img/web/artikel/thumbnail/' . $value->gambar ) . '" style="width: 100px;"></center>';
+            $data_tables[$key][] = $value->judul;
+            $data_tables[$key][] = substr($value->isi, 0, 100) . '...';
+
+            $aksi = '';
+
+            $aksi .= '&nbsp;<a href="javascript:void(0)" class="edit text-dark" data-id_artikel="' . $value->id_artikel . '"><i class="fa fa-edit text-info"></i> Edit</a>';
+
+            $aksi .= '&nbsp; <a href="#!" onClick="hapus(' . $value->id_artikel . ')"><i class="fa fa-trash text-danger"></i> Hapus</a>';
+
+            $data_tables[$key][] = $aksi;
+        }
+
+        $data = [
+            "data" => $data_tables
+        ];
+
+        // dd($datas);
+        return response()->json($data);
+    }
+
+    public function storenews(Request $request)
+    {
+        $data = new M_artikel;
+        $id_artikel = M_artikel::max('id_artikel') + 1;
+
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/artikel/thumbnail');
+            $img = Image::make($image->path());
+            $imageName =  'at-' . Carbon::now()->format("Y-m-d") . '-' . $id_artikel . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/artikel/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = 'default.jpg';
+        }
+
+        $data->judul      = $request->judul;
+        $data->isi        = $request->keterangan;
+        $data->gambar     = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editnews(Request $request)
+    {
+        $data = M_artikel::findOrFail($request->artikel);
+
+        $gambar = asset('img/web/artikel/thumbnail/' . $data->gambar);
+
+        $data =[
+            'gambar'        => $gambar,
+            'judul'         => $data->judul,
+            'keterangan'    => $data->isi,
+            'id_artikel'    => $data->id_artikel,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function ubahnews(Request $request)
+    {
+        $data = M_artikel::findOrFail($request->id_artikel);
+        
+        if ($request->file('gambar')) {
+            $image = $request->file('gambar');
+            $destinationPath = public_path('/img/web/artikel/thumbnail');
+            $img = Image::make($image->path());
+            $imageName = 'at-' . Carbon::now()->format("Y-m-d") . '-' . $request->id_artikel . '.jpg';
+
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imageName);
+
+            $destinationPath = public_path('/img/web/artikel/');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = 'default.jpg';
+        }
+
+        $data->judul      = $request->judul;
+        $data->isi        = $request->keterangan;
+        $data->gambar     = $imageName;
+
+        try {
+            $data->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'pesan'  => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'pesan'  => 'Maaf, Data Gagal Tersimpan!',
+                'err'    => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroynews(Request $request)
+    {
+        $data = M_artikel::findOrFail($request->id);
 
         if ($data->delete()) {
 
